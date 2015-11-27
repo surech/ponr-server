@@ -6,13 +6,33 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
 
     <changeSet id="1" author="surech">
-        <createTable tableName="test">
-            <column name="ID" type="BIGINT" autoIncrement="true" remarks="Technischer Primärschlüssel">
-                <constraints nullable="false" primaryKey="true" />
-            </column>
-            <column name="PUBLIC_ID" type="varchar(50)" remarks="Öffentlicher Schlüssel">
-                <constraints nullable="false" unique="true" />
-            </column>
-        </createTable>
+        <comment>Neue Tabelle für den Anbieter</comment>
+        <sql>
+            CREATE TABLE ponr.provider
+            (
+            ID BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+            PUBLIC_ID VARCHAR(50) NOT NULL,
+            NAME VARCHAR(255) NOT NULL,
+            LOCATION GEOMETRY NOT NULL
+            ) ENGINE=MyISAM;
+            CREATE SPATIAL INDEX LOCATION ON provider ( LOCATION );
+        </sql>
     </changeSet>
+
+    <changeSet id="2" author="surech">
+        <comment>Den öffentlichen Schlüssel mit einem eindeutigen Index versehen</comment>
+        <addUniqueConstraint tableName="provider" columnNames="PUBLIC_ID"/>
+    </changeSet>
+    
+    <changeSet id="3" author="surech">
+        <addColumn tableName="provider">
+            <column name="street" type="varchar(255)"/>
+            <column name="zip" type="varchar(255)"/>
+            <column name="city" type="varchar(255)"/>
+            <column name="description" type="varchar(512)"/>
+            <column name="url" type="varchar(255)"/>
+            <column name="poinzId" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
