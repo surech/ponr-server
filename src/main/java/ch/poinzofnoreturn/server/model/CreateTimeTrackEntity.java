@@ -12,7 +12,7 @@ import java.util.Date;
 public abstract class CreateTimeTrackEntity extends BaseEntity {
 
     /** Erstell-Datum */
-    @Column(name="createdat")
+    @Column(name="createdAt")
     private Date createdAt;
 
     public Date getCreatedAt() {

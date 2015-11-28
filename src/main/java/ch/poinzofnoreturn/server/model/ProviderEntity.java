@@ -37,7 +37,7 @@ public class ProviderEntity extends PublicIdEntity {
     @Column(name = "url")
     private String url;
 
-    @Column(name = "poinzid")
+@Column(name = "poinzId")
     private String poinzId;
 
     public ProviderEntity() {
