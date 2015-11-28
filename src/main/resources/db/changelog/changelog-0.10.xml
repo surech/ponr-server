@@ -35,4 +35,10 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="4" author="surech">
+        <addColumn tableName="provider">
+            <column name="createdAt" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
