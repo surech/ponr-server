@@ -1,7 +1,12 @@
 package ch.poinzofnoreturn.server.model;
 
+import ch.poinzofnoreturn.server.converter.PointDeserializer;
+import ch.poinzofnoreturn.server.converter.PointSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.vividsolutions.jts.geom.Geometry;
 import org.hibernate.annotations.Type;
-import org.springframework.data.geo.Point;
+import com.vividsolutions.jts.geom.Point;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,9 +22,13 @@ public class ProviderEntity extends PublicIdEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    /** Geografische Position der Anlage */
-    @Column(name="location", nullable = false)
-    @Type(type="org.hibernate.spatial.GeometryType")
+    /**
+     * Geografische Position der Anlage
+     */
+    @Column(name = "location", nullable = false)
+    @Type(type = "org.hibernate.spatial.GeometryType")
+    @JsonSerialize(using = PointSerializer.class)
+    @JsonDeserialize(using = PointDeserializer.class)
     private Point location;
 
     @Column(name = "street")
