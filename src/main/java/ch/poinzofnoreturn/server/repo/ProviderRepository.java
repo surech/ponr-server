@@ -9,4 +9,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  */
 @RepositoryRestResource(collectionResourceRel = "provider", path="provider")
 public interface ProviderRepository extends CrudRepository<ProviderEntity, Long> {
+
 }

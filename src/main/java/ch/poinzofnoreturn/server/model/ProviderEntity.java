@@ -10,7 +10,10 @@ import com.vividsolutions.jts.geom.Point;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Repräsentiert einen Anbieter
@@ -45,6 +48,9 @@ public class ProviderEntity extends PublicIdEntity {
 
     @Column(name = "url")
     private String url;
+
+    @OneToMany(mappedBy = "provider")
+    private List<PointcodeEntity> pointcodes;
 
 @Column(name = "poinzId")
     private String poinzId;
@@ -114,5 +120,12 @@ public class ProviderEntity extends PublicIdEntity {
 
     public void setPoinzId(String poinzId) {
         this.poinzId = poinzId;
+    }
+
+    public List<PointcodeEntity> getPointcodes() {
+        if (pointcodes == null) {
+            pointcodes = new ArrayList<>();
+        }
+        return pointcodes;
     }
 }
