@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Geometry;
 import org.hibernate.annotations.Type;
 import com.vividsolutions.jts.geom.Point;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,6 +50,7 @@ public class ProviderEntity extends PublicIdEntity {
     @Column(name = "url")
     private String url;
 
+    @RestResource(rel = "code")
     @OneToMany(mappedBy = "provider")
     private List<PointcodeEntity> pointcodes;
 

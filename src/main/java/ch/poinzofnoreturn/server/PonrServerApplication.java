@@ -7,7 +7,6 @@ import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 @EntityScan("ch.poinzofnoreturn.server.model")
 @EnableJpaRepositories("ch.poinzofnoreturn.server.repo")
 public class PonrServerApplication {
