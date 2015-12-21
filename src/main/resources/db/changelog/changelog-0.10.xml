@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+
+    <changeSet id="1" author="surech">
+        <comment>Neue Tabelle für den Anbieter</comment>
+        <sql>
+            CREATE TABLE ponr.provider
+            (
+            ID BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+            PUBLIC_ID VARCHAR(50) NOT NULL,
+            NAME VARCHAR(255) NOT NULL,
+            LOCATION GEOMETRY NOT NULL
+            ) ENGINE=MyISAM;
+            CREATE SPATIAL INDEX LOCATION ON provider ( LOCATION );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="surech">
+        <comment>Den öffentlichen Schlüssel mit einem eindeutigen Index versehen</comment>
+        <addUniqueConstraint tableName="provider" columnNames="PUBLIC_ID"/>
+    </changeSet>
+
+    <changeSet id="3" author="surech">
+        <addColumn tableName="provider">
+            <column name="street" type="varchar(255)"/>
+            <column name="zip" type="varchar(255)"/>
+            <column name="city" type="varchar(255)"/>
+            <column name="description" type="varchar(512)"/>
+            <column name="url" type="varchar(255)"/>
+            <column name="poinzId" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="4" author="surech">
+        <addColumn tableName="provider">
+            <column name="createdAt" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="5" author="surech">
+        <createTable tableName="pointcode">
+            <column name="ID" type="BIGINT" autoIncrement="true" remarks="Technischer Primärschlüssel">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="PUBLIC_ID" type="varchar(50)" remarks="Öffentlicher Schlüssel">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="PROVIDER_FK" type="BIGINT" remarks="Fremdschlüssel auf den Anbieter">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="CONTENT" type="varchar(500)" remarks="Inhalt des Codes">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="createdAt" type="DATETIME">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE ponr.pointcode ENGINE=MyISAM</sql>
+
+        <addForeignKeyConstraint baseTableName="pointcode" baseColumnNames="PROVIDER_FK"
+                                 constraintName="POINTCODE_PROVIDER_FK"
+                                 referencedTableName="provider"
+                                 referencedColumnNames="ID" />
+    </changeSet>
+
+</databaseChangeLog>
