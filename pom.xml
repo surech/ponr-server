@@ -10,6 +10,23 @@
 
 	<name>ponr-server</name>
 	<description>Server für PoinzOfNoReturn.ch</description>
+	<url>http://www.PoinzOfNoReturn.ch</url>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Stefan Urech</name>
+			<email>stefan@surech.ch</email>
+			<organization>surech.ch</organization>
+			<url>http://www.surech.ch</url>
+		</developer>
+	</developers>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -21,6 +38,24 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>
+
+	<scm>
+		<connection>scm:git:ssh://github.com:surech/ponr-server.git</connection>
+		<developerConnection>scm:git:ssh://github.com:surech/ponr-server.git</developerConnection>
+		<url>scm:git:ssh://github.com:surech/ponr-server.git</url>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>hosted.ponr.releases</id>
+			<url>http://repo.surech.ch/content/repositories/hosted.ponr.releases</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>hosted.ponr.snapshots</id>
+			<url>http://repo.surech.ch/content/repositories/hosted.ponr.snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>
