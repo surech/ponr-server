@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.EnumMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -30,8 +31,10 @@ public class QrCodeController {
 
     @RequestMapping(path = "/qrcode/generate", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] generate(@RequestParam(value="input") String input) throws WriterException, IOException {
-        Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
+//        Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
+        Map<EncodeHintType, Object> hintMap = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+        hintMap.put(EncodeHintType.MARGIN, 1);
 
         QRCodeWriter writer = new QRCodeWriter();
         BitMatrix byteMatrix = writer.encode(input, BarcodeFormat.QR_CODE, SIZE, SIZE, hintMap);
