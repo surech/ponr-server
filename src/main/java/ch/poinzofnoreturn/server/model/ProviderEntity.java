@@ -2,11 +2,11 @@ package ch.poinzofnoreturn.server.model;
 
 import ch.poinzofnoreturn.server.converter.PointDeserializer;
 import ch.poinzofnoreturn.server.converter.PointSerializer;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.vividsolutions.jts.geom.Geometry;
-import org.hibernate.annotations.Type;
 import com.vividsolutions.jts.geom.Point;
+import org.hibernate.annotations.Type;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.Column;
@@ -54,7 +54,7 @@ public class ProviderEntity extends PublicIdEntity {
     @OneToMany(mappedBy = "provider")
     private List<PointcodeEntity> pointcodes;
 
-@Column(name = "poinzId")
+    @Column(name = "poinzId")
     private String poinzId;
 
     public ProviderEntity() {
