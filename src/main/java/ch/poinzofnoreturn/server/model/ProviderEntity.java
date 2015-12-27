@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "provider")
-public class ProviderEntity extends PublicIdEntity {
+public class ProviderEntity extends CreateTimeTrackEntity {
 
     @Column(name = "name", nullable = false)
     private String name;

@@ -68,4 +68,10 @@
                                  referencedColumnNames="ID" />
     </changeSet>
 
+    <changeSet id="6" author="surech">
+        <comment>Aktuell brauchen wir die Public-ID nicht mehr, also weg damit.</comment>
+        <dropColumn tableName="provider" columnName="public_id"/>
+        <dropColumn tableName="pointcode" columnName="public_id"/>
+    </changeSet>
+
 </databaseChangeLog>

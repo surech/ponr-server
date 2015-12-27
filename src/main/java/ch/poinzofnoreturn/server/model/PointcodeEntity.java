@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="pointcode")
-public class PointcodeEntity extends PublicIdEntity {
+public class PointcodeEntity extends CreateTimeTrackEntity {
     @ManyToOne
     @JoinColumn(name = "provider_fk")
     private ProviderEntity provider;
