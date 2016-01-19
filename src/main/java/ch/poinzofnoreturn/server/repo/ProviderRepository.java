@@ -2,6 +2,7 @@ package ch.poinzofnoreturn.server.repo;
 
 import ch.poinzofnoreturn.server.model.ProviderEntity;
 import ch.poinzofnoreturn.server.projection.ProviderWithCode;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -19,5 +20,5 @@ public interface ProviderRepository extends PagingAndSortingRepository<ProviderE
 
     @Query("SELECT p FROM ProviderEntity p JOIN p.pointcodes c")
     @RestResource(path = "onlyWithCodes", rel = "onlyWithCodes")
-    public List<ProviderEntity> findProviderWithPointcodes(Pageable p);
+    public Page<ProviderEntity> findProviderWithPointcodes(Pageable p);
 }
