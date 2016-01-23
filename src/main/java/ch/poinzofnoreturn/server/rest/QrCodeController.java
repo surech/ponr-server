@@ -67,7 +67,10 @@ public class QrCodeController {
         if (!qrcode.isEmpty()) {
             InputStream inputStream = qrcode.getInputStream();
 
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(inputStream))));
+            BufferedImage image = ImageIO.read(inputStream);
+            BufferedImage resizedCopy = createResizedCopy(image, 1200, false);
+
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(resizedCopy)));
             MultiFormatReader reader = new MultiFormatReader();
             Result content = reader.decode(bitmap);
 
@@ -76,6 +79,26 @@ public class QrCodeController {
         } else {
             throw new IllegalArgumentException("Empty File not accepted");
         }
+    }
+
+    BufferedImage createResizedCopy(BufferedImage originalImage,
+                                    int scaledWidth,
+                                    boolean preserveAlpha)
+    {
+        int scaledHeight = originalImage.getHeight() * scaledWidth / originalImage.getWidth();
+        int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+        BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, imageType);
+        Graphics2D g = scaledBI.createGraphics();
+        if (preserveAlpha) {
+            g.setComposite(AlphaComposite.Src);
+        }
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
+        g.dispose();
+        return scaledBI;
     }
 
 }
