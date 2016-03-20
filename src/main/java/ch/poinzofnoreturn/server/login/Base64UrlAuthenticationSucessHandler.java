@@ -1,10 +1,12 @@
 package ch.poinzofnoreturn.server.login;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
+import java.util.Base64;
 
 /**
  * Einige OAuth-Provider sind recht heikel, was die übergebenen Parameter angelangt. Facebook z.B. erklaubt keine
@@ -19,13 +21,11 @@ public class Base64UrlAuthenticationSucessHandler extends SimpleUrlAuthenticatio
             // Wert auslesen
             String targetUrlEncoded = request.getParameter(targetUrlParameter);
 
-            // Wenn der Wert nicht mit einem "=" endet, fügen wir es hinzu
-            if (!targetUrlEncoded.endsWith("=")) {
-                targetUrlEncoded += "=";
-            }
+            // Das "=" am Ende immer entfernen
+            targetUrlEncoded = StringUtils.stripEnd(targetUrlEncoded, "=");
 
             // Inhalt decodieren.
-            byte[] bytes = DatatypeConverter.parseBase64Binary(targetUrlEncoded);
+            byte[] bytes = Base64.getDecoder().decode(targetUrlEncoded);
             String targetUrl = new String(bytes);
 
             return targetUrl;
