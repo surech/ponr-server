@@ -74,4 +74,73 @@
         <dropColumn tableName="pointcode" columnName="public_id"/>
     </changeSet>
 
+    <changeSet id="7" author="surech">
+        <createTable tableName="user" remarks="Enthält die eigentlichen Benutzer">
+            <column name="ID" type="BIGINT" autoIncrement="true" remarks="Technischer Primärschlüssel">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="createdAt" type="DATETIME">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE ponr.user ENGINE=MyISAM</sql>
+    </changeSet>
+
+    <changeSet id="8" author="surech">
+        <createTable tableName="userclientconnection">
+            <column name="ID" type="BIGINT" autoIncrement="true" remarks="Technischer Primärschlüssel">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="USER_FK" type="BIGINT" remarks="Fremdschlüssel auf den Benutzer">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="CLIENT_ID" type="varchar(500)" remarks="Client-ID des OAuth-Providers">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="PRINCIPAL_ID" type="varchar(500)" remarks="Identifiert des Benutzers beim OAuth-Provider">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="createdAt" type="DATETIME">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE ponr.userclientconnection ENGINE=MyISAM</sql>
+
+        <addForeignKeyConstraint baseTableName="userclientconnection" baseColumnNames="USER_FK"
+                                 constraintName="USER_CONNECTION_FK"
+                                 referencedTableName="user"
+                                 referencedColumnNames="ID" />
+    </changeSet>
+
+    <changeSet id="9" author="surech">
+        <createTable tableName="favorites">
+            <column name="ID" type="BIGINT" autoIncrement="true" remarks="Technischer Primärschlüssel">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="USER_FK" type="BIGINT" remarks="Fremdschlüssel auf den Benutzer">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="POINTCODE_FK" type="varchar(500)" remarks="Fremdschlüssel auf den favorisierten Code">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="createdAt" type="DATETIME">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE ponr.favorites ENGINE=MyISAM</sql>
+
+        <addForeignKeyConstraint baseTableName="favorites" baseColumnNames="USER_FK"
+                                 constraintName="FAVORITE_USER_FK"
+                                 referencedTableName="user"
+                                 referencedColumnNames="ID" />
+
+        <addForeignKeyConstraint baseTableName="favorites" baseColumnNames="POINTCODE_FK"
+                                 constraintName="FAVORITE_CODE_FK"
+                                 referencedTableName="pointcode"
+                                 referencedColumnNames="ID" />
+    </changeSet>
+
 </databaseChangeLog>
